@@ -4,10 +4,10 @@ import re
 class MDXFormatter:
     def remove_trailing_backticks(self, input_string):
         return input_string.rstrip('`')
-    
+
     def remove_leading_mdx(self, input_string):
         return re.sub(r'^```mdx', '', input_string)
-    
+
     def remove_leading_and_trailing_whitespace(self, input_string):
         return input_string.strip()
 
@@ -16,7 +16,7 @@ class MDXFormatter:
             documentation = documentation[0]
         else:
             documentation = "No documentation generated."
-        
+
         formatted_documentation = documentation.replace("\\n", "\n")
         formatted_documentation = self.remove_leading_mdx(formatted_documentation)
         formatted_documentation = self.remove_trailing_backticks(formatted_documentation)

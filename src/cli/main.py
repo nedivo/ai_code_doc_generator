@@ -13,7 +13,7 @@ def read_codebase(source_directory):
     for root, dirs, files in os.walk(source_directory):
         dirs[:] = [d for d in dirs if not d.startswith('.')]
         for file in files:
-            if file.endswith(".py"):  
+            if file.endswith(".py"):
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r') as f:
                     code_content = f.read()
@@ -78,55 +78,59 @@ def process_everything(code, root, ai_generator, formatter):
 
 def update_min_json(docs_dir, new_page):
     min_json_path = os.path.join(docs_dir, 'mint.json')
-    min_json_data = """{
-        "$schema": "https://mintlify.com/schema.json",
-        "name": "maud",
-        "logo": {
-            "dark": "/logo/dark.png",
-            "light": "/logo/light.png"
-        },
-        "favicon": "/favicon.png",
-        "modeToggle": {
-            "default": "light",
-            "isHidden": true
-        },
-        "colors": {
-            "primary": "#0092e0",
-            "light": "#0092e0",
-            "dark": "#0092e0"
-        },
-        "topbarCtaButton": {
-            "name": "Star us on GitHub!",
-            "url": "https://github.com/nedivo/maud"
-        },
-        "navigation": [
-            {
-                "group": "Getting Started",
-                "pages": [
-                    "welcome",
-                    "quickstart"
-                ]
+    min_json_data = json.loads(
+        """
+        {
+            "$schema": "https://mintlify.com/schema.json",
+            "name": "maud",
+            "logo": {
+                "dark": "/logo/dark.png",
+                "light": "/logo/light.png"
             },
-            {
-                "group": "MAUD Basics",
-                "pages": [
-                    "what-is-it",
-                    "how-it-works"
-                ]
+            "favicon": "/favicon.png",
+            "modeToggle": {
+                "default": "light",
+                "isHidden": true
             },
-            {
-                "group": "Element Details",
-                "pages": [
-                    "getting-number"
-                ]
+            "colors": {
+                "primary": "#0092e0",
+                "light": "#0092e0",
+                "dark": "#0092e0"
+            },
+            "topbarCtaButton": {
+                "name": "Star us on GitHub!",
+                "url": "https://github.com/nedivo/maud"
+            },
+            "navigation": [
+                {
+                    "group": "Getting Started",
+                    "pages": [
+                        "welcome",
+                        "quickstart"
+                    ]
+                },
+                {
+                    "group": "MAUD Basics",
+                    "pages": [
+                        "what-is-it",
+                        "how-it-works"
+                    ]
+                },
+                {
+                    "group": "Element Details",
+                    "pages": [
+                        "getting-number"
+                    ]
+                }
+            ],
+            "footerSocials": {
+                "instagram": "https://www.instagram.com/nedivo.co/",
+                "linkedin": "https://www.linkedin.com/company/nedivo",
+                "website": "https://www.nedivo.co/"
             }
-        ],
-        "footerSocials": {
-            "instagram": "https://www.instagram.com/nedivo.co/",
-            "linkedin": "https://www.linkedin.com/company/nedivo",
-            "website": "https://www.nedivo.co/"
         }
-    }"""
+        """
+    )
 
     if os.path.exists(min_json_path):
         with open(min_json_path, 'r') as file:
@@ -158,7 +162,7 @@ def main():
     for root, dirs, files in os.walk(args.source_directory):
         dirs[:] = [d for d in dirs if not d.startswith('.')]
         for file in files:
-            if file.endswith(".py"):  
+            if file.endswith(".py"):
                 file_path = os.path.join(root, file)
                 if not should_skip_file(file_path):
                     process_file(file_path, ai_generator, formatter, args.source_directory)
